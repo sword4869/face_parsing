@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- encoding: utf-8 -*-
 
-from random import sample
-from logger import setup_logger
 from model import BiSeNet
 
 import torch
@@ -23,12 +21,13 @@ def vis_parsing_maps(
     sample_name,
     save_im=False,
 ):
-    # Colors for all 20 parts
     if not os.path.exists(osp.join(save_root, 'unmerge', sample_name)):
         os.makedirs(osp.join(save_root, 'unmerge', sample_name))
 
     atts = ['background', 'skin', 'l_brow', 'r_brow', 'l_eye', 'r_eye', 'eye_g', 'l_ear', 'r_ear', 
             'ear_r', 'nose', 'mouth', 'u_lip', 'l_lip', 'neck', 'neck_l', 'cloth', 'hair', 'hat']
+
+    # Colors specific parts (not zero)
     part_colors = [
         [0x00] * 3, # bg
         [0x64] * 3, # skin
@@ -52,7 +51,6 @@ def vis_parsing_maps(
     ]
 
     im = np.array(im)
-    vis_im = im.copy().astype(np.uint8)
     vis_parsing_anno = parsing_anno.copy().astype(np.uint8)
     vis_parsing_anno = cv2.resize(vis_parsing_anno, None, fx=stride, fy=stride, interpolation=cv2.INTER_NEAREST)
     merge = np.zeros((vis_parsing_anno.shape[0], vis_parsing_anno.shape[1], 3))
