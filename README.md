@@ -23,6 +23,11 @@ names are begin with `Mask_`.
 Under the `umerge` folder, there are folders named with the input file names.
 Inside them are unmerged parts.
 
+# Reference
+1. [Code: BiSeNet](https://github.com/CoinCheung/BiSeNet)
+2. [Paper: BiSeNetV1](https://arxiv.org/abs/1808.00897)
+3. [Paper: BiSeNetV2](https://arxiv.org/abs/2004.02147)
+
 # Author
 Wei Deng
 
