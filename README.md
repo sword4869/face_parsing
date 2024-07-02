@@ -1,14 +1,22 @@
- [README_ZH.md](README_ZH.md)  [README.md](README.md) 
+[README_ZH.md](README_ZH.md)  [README.md](README.md) 
 
 # Description
 
 This repo is used to generate semantic segmentation for face image.
 
-# Output
+# Installation
+
+Download the weight file 79999_iter.pth from https://drive.google.com/open?id=154JgKpzCPW82qINcVieuPH3fZ2e0P812.
+
+```python
+# pip install -e git+https://github.com/sword4869/face_parsing.git#egg=face_parsing
+pip install face_parsing
+```
+# Input and Output
 ```
 ├── pretrain
 │   └── 79999_iter.pth      # ckpt
-├── test_img            # input
+├── test_img                # input
 │   ├── 00000.jpg
 │   └── 116_ori.png
 └── test_res                # output
@@ -31,8 +39,6 @@ This repo is used to generate semantic segmentation for face image.
             ├── hair.png
 ```
 ```python
-pip install -e .
-
 # Inside the `face_parsing` directory
 $ face_parsing
 
@@ -43,7 +49,7 @@ The generating script is `segment.py`. It will output the segmentaion images to 
 
 `masks`: only show recognized part.
 
-color1 from face-parsing.PyTorch code,
+color1 from [face-parsing.PyTorch](https://github.com/zllrunning/face-parsing.PyTorch) code,
 
 color2 from `CelebAMask-HQ` colors in `CelebAMask-HQ/face_parsing/Data_preprocessing/g_color.py`
 

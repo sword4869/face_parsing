@@ -1,14 +1,22 @@
- [README_ZH.md](README_ZH.md)  [README.md](README.md) 
+[README_ZH.md](https://github.com/sword4869/face_parsing/blob/master/README_ZH.md) | [README.md](https://github.com/sword4869/face_parsing/blob/master/README.md) 
 
 # 项目描述 
 
 该仓库用于生成人脸图像的语义分割。
 
-# 输出
+# 安装
+
+下载 https://drive.google.com/open?id=154JgKpzCPW82qINcVieuPH3fZ2e0P812 的权重文件 79999_iter.pth
+```python
+# pip install -e git+https://github.com/sword4869/face_parsing.git#egg=face_parsing
+pip install face_parsing
+```
+
+# 输入和输出
 ```
 ├── pretrain
 │   └── 79999_iter.pth      # ckpt
-├── test_img            # 输入
+├── test_img                # 输入
 │   ├── 00000.jpg
 │   └── 116_ori.png
 └── test_res                # 输出
@@ -31,8 +39,6 @@
             ├── hair.png
 ```
 ```python
-pip install -e .
-
 # 在face_parsing下
 $ face_parsing
 
