@@ -6,8 +6,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from resnet import Resnet18
-# from modules.bn import InPlaceABNSync as BatchNorm2d
+from face_parsing.resnet import Resnet18
 
 
 class ConvBNReLU(nn.Module):

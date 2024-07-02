@@ -1,24 +1,24 @@
  [README_ZH.md](README_ZH.md)  [README.md](README.md) 
 
-# Description
+# 项目描述 
 
-This repo is used to generate semantic segmentation for face image.
+该仓库用于生成人脸图像的语义分割。
 
-# Output
+# 输出
 ```
 ├── pretrain
 │   └── 79999_iter.pth      # ckpt
-├── test_img            # input
+├── test_img            # 输入
 │   ├── 00000.jpg
 │   └── 116_ori.png
-└── test_res                # output
-    ├── merge_00000.png             # merge masks
+└── test_res                # 输出
+    ├── merge_00000.png             # 融合mask
     ├── merge_116_ori.png
-    ├── weighted_00000.png          # weighted original
+    ├── weighted_00000.png          # 叠加原图
     ├── weighted_116_ori.png
-    ├── parsing_00000.png           # classification result, each pixel value is [0, 18]
+    ├── parsing_00000.png           # 分类结果，每个像素的值是[0, 18]
     ├── parsing_116_ori.png
-    └── masks                       # masks for each part
+    └── masks                       # 各部分mask
         ├── 00000
         │   ├── background.png
         │   ├── eye_g.png
@@ -33,19 +33,21 @@ This repo is used to generate semantic segmentation for face image.
 ```python
 pip install -e .
 
-# Inside the `face_parsing` directory
+# 在face_parsing下
 $ face_parsing
 
-# Outside the `face_parsing` directory
-$ face_parsing --ckpt 79999_iter.pth --res_path test_res --img_path test_img
+# 在face_parsing路径外
+$ face_parsing --ckpt ~/79999_iter.pth --res_path ~/test_res --img_path ~/test_img
 ```
-The generating script is `segment.py`. It will output the segmentaion images to the specific folder(`test_res` by default).
+生成脚本为 `segment.py`。默认情况下，它将把分割图像输出到 `test_res` 文件夹中。
 
-`masks`: only show recognized part.
+`masks`: 仅展示识别部分。
 
-color1 from face-parsing.PyTorch code,
 
-color2 from `CelebAMask-HQ` colors in `CelebAMask-HQ/face_parsing/Data_preprocessing/g_color.py`
+
+color1 原来 [face-parsing.PyTorch](https://github.com/zllrunning/face-parsing.PyTorch) 代码的颜色, 
+
+color2 `CelebAMask-HQ`的颜色 `CelebAMask-HQ/face_parsing/Data_preprocessing/g_color.py`
 
 | Index |    Name    |    Color1     |    Color2     |
 | :---: | :--------: | :-----------: | :-----------: |
@@ -75,7 +77,7 @@ color2 from `CelebAMask-HQ` colors in `CelebAMask-HQ/face_parsing/Data_preproces
 
 ![image-20240702214100671](https://cdn.jsdelivr.net/gh/sword4869/pic1@main/images/202407022141703.png)
 
-# Reference
+# 参考资料
 
 > folk from https://github.com/zllrunning/face-parsing.PyTorch, https://github.com/dw-dengwei/face-seg
 
