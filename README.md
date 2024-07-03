@@ -1,87 +1,97 @@
-[README_ZH.md](README_ZH.md)  [README.md](README.md) 
+[README_ZH.md](https://github.com/sword4869/face_parsing/blob/master/README.md) | [README_EN.md](https://github.com/sword4869/face_parsing/blob/master/README_EN.md) 
 
-# Description
+# 项目描述 
 
-This repo is used to generate semantic segmentation for face image.
+该仓库用于生成人脸图像的语义分割。
 
-# Installation
+# 安装
 
-Download the weight file 79999_iter.pth from https://drive.google.com/open?id=154JgKpzCPW82qINcVieuPH3fZ2e0P812.
-
+下载 https://drive.google.com/open?id=154JgKpzCPW82qINcVieuPH3fZ2e0P812 的权重文件 79999_iter.pth
 ```python
 # pip install -e git+https://github.com/sword4869/face_parsing.git#egg=face_parsing
 pip install face_parsing
 ```
-# Input and Output
+
+# 输入和输出
 ```
 ├── pretrain
 │   └── 79999_iter.pth      # ckpt
-├── test_img                # input
+├── test_img                # 输入
 │   ├── 00000.jpg
 │   └── 116_ori.png
-└── test_res                # output
-    ├── merge_00000.png             # merge masks
+└── test_res                # 输出
+    ├── chosen_merge_00000.png      # 指定部分融合mask
+    ├── chosen_merge_116_ori.png
+    ├── merge_00000.png             # 融合mask
     ├── merge_116_ori.png
-    ├── weighted_00000.png          # weighted original
+    ├── weighted_00000.png          # 叠加原图
     ├── weighted_116_ori.png
-    ├── parsing_00000.png           # classification result, each pixel value is [0, 18]
+    ├── parsing_00000.png           # 分类结果，每个像素的值是[0, 18]
     ├── parsing_116_ori.png
-    └── masks                       # masks for each part
+    └── masks                       # 各部分mask
         ├── 00000
-        │   ├── background.png
-        │   ├── eye_g.png
-        │   ├── hair.png
-        │   ├── hat.png
+        │   ├── 00_background.png
+        │   ├── 01_skin.png
+        │   ├── 02_l_brow.png
+        │   ├── 03_r_brow.png
         └── 116_ori
-            ├── background.png
-            ├── ear_r.png
-            ├── eye_g.png
-            ├── hair.png
+            ├── 00_background.png
+            ├── 01_skin.png
+            ├── 02_l_brow.png
+            ├── 03_r_brow.png
 ```
-```python
-# Inside the `face_parsing` directory
+```bash
+usage: face_parsing [-h] [--res_path RES_PATH] [--img_path IMG_PATH] [--ckpt CKPT] [--chosen_parts CHOSEN_PARTS [CHOSEN_PARTS ...]] [--reverse] [--color_style {face-parsing-style,CelebAMask-HQ-style}]
+
+options:
+  -h, --help            show this help message and exit
+  --res_path RES_PATH   results path
+  --img_path IMG_PATH   data path
+  --ckpt CKPT           checkpoint path
+  --chosen_parts CHOSEN_PARTS [CHOSEN_PARTS ...]
+                        chosen parts
+  --reverse             reverse the chosen parts
+  --color_style {face-parsing-style,CelebAMask-HQ-style}
+                        color style
+
+# 在face_parsing下
 $ face_parsing
 
-# Outside the `face_parsing` directory
-$ face_parsing --ckpt 79999_iter.pth --res_path test_res --img_path test_img
+# 在face_parsing路径外
+$ face_parsing --ckpt ~/79999_iter.pth --res_path ~/test_res --img_path ~/test_img
 ```
-The generating script is `segment.py`. It will output the segmentaion images to the specific folder(`test_res` by default).
 
-`masks`: only show recognized part.
+| Index |   Name   | [face-parsing.PyTorch](https://github.com/zllrunning/face-parsing.PyTorch) Style RGB | [CelebAMask-HQ](https://github.com/switchablenorms/CelebAMask-HQ/blob/master/face_parsing/README.md) Style RGB |
+|-------|----------|------------------------|-------------------------|
+|   0   | background | [255, 0, 0]          | [0, 0, 0]               |
+|   1   | skin     | [255, 85, 0]          | [204, 0, 0]             |
+|   2   | l_brow   | [255, 170, 0]         | [0, 255, 255]           |
+|   3   | r_brow   | [255, 0, 85]          | [255, 204, 204]         |
+|   4   | l_eye    | [255, 0, 170]         | [51, 51, 255]           |
+|   5   | r_eye    | [0, 255, 0]           | [204, 0, 204]           |
+|   6   | eye_g    | [85, 255, 0]          | [204, 204, 0]           |
+|   7   | l_ear    | [170, 255, 0]         | [102, 51, 0]            |
+|   8   | r_ear    | [0, 255, 85]          | [255, 0, 0]             |
+|   9   | ear_r    | [0, 255, 170]         | [0, 204, 204]           |
+|   10  | nose     | [0, 0, 255]           | [76, 153, 0]            |
+|   11  | mouth    | [85, 0, 255]          | [102, 204, 0]           |
+|   12  | u_lip    | [170, 0, 255]         | [255, 255, 0]           |
+|   13  | l_lip    | [0, 85, 255]          | [0, 0, 153]             |
+|   14  | neck     | [0, 170, 255]         | [255, 153, 51]          |
+|   15  | neck_l   | [255, 255, 0]         | [0, 51, 0]              |
+|   16  | cloth    | [255, 255, 85]        | [0, 204, 0]             |
+|   17  | hair     | [255, 255, 170]       | [0, 0, 204]             |
+|   18  | hat      | [255, 0, 255]         | [255, 51, 153]          |
 
-color1 from [face-parsing.PyTorch](https://github.com/zllrunning/face-parsing.PyTorch) code,
+## face-parsing的模型效果
 
-color2 from `CelebAMask-HQ` colors in `CelebAMask-HQ/face_parsing/Data_preprocessing/g_color.py`
+![image-20240703160744779](https://cdn.jsdelivr.net/gh/sword4869/pic1@main/images/202407031607840.png)
 
-| Index |    Name    |    Color1     |    Color2     |
-| :---: | :--------: | :-----------: | :-----------: |
-|   0   | background |   255, 0, 0   |    0, 0, 0    |
-|   1   |    skin    |  255, 85, 0   |   204, 0, 0   |
-|   2   |    nose    |  255, 170, 0  |  76, 153, 0   |
-|   3   |   eye_g    |  255, 0, 85   |  204, 204, 0  |
-|   4   |   l_eye    |  255, 0, 170  |  51, 51, 255  |
-|   5   |   r_eye    |   0, 255, 0   |  204, 0, 204  |
-|   6   |   l_brow   |  85, 255, 0   |  0, 255, 255  |
-|   7   |   r_brow   |  170, 255, 0  | 255, 204, 204 |
-|   8   |   l_ear    |  0, 255, 85   |  102, 51, 0   |
-|   9   |   r_ear    |  0, 255, 170  |   255, 0, 0   |
-|  10   |   mouth    |   0, 0, 255   |  102, 204, 0  |
-|  11   |   u_lip    |  85, 0, 255   |  255, 255, 0  |
-|  12   |   l_lip    |  170, 0, 255  |   0, 0, 153   |
-|  13   |    hair    |  0, 85, 255   |   0, 0, 204   |
-|  14   |    hat     |  0, 170, 255  | 255, 51, 153  |
-|  15   |   ear_r    |  255, 255, 0  |  0, 204, 204  |
-|  16   |   neck_l   | 255, 255, 85  |   0, 51, 0    |
-|  17   |    neck    | 255, 255, 170 | 255, 153, 51  |
-|  18   |   cloth    |  255, 0, 255  |   0, 204, 0   |
+![image-20240703160815874](https://cdn.jsdelivr.net/gh/sword4869/pic1@main/images/202407031608907.png)
 
-![image-20240702214442271](https://cdn.jsdelivr.net/gh/sword4869/pic1@main/images/202407022144311.png)
+![image-20240703160828697](https://cdn.jsdelivr.net/gh/sword4869/pic1@main/images/202407031608737.png)
 
-![image-20240702214108718](https://cdn.jsdelivr.net/gh/sword4869/pic1@main/images/202407022141752.png)
-
-![image-20240702214100671](https://cdn.jsdelivr.net/gh/sword4869/pic1@main/images/202407022141703.png)
-
-# Reference
+# 参考资料
 
 > folk from https://github.com/zllrunning/face-parsing.PyTorch, https://github.com/dw-dengwei/face-seg
 

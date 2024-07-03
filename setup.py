@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='face_parsing',
-    version='0.1',
+    version='0.2',
     description='This repo is used to generate semantic segmentation for face image',
     long_description=open("README.md", "r", encoding="utf-8").read(),
     long_description_content_type="text/markdown",

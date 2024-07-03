@@ -1,32 +1,32 @@
-[README_ZH.md](https://github.com/sword4869/face_parsing/blob/master/README_ZH.md) | [README.md](https://github.com/sword4869/face_parsing/blob/master/README.md) 
+[README_ZH.md](https://github.com/sword4869/face_parsing/blob/master/README.md) | [README_EN.md](https://github.com/sword4869/face_parsing/blob/master/README_EN.md) 
 
-# 项目描述 
+# Description
 
-该仓库用于生成人脸图像的语义分割。
+This repo is used to generate semantic segmentation for face image.
 
-# 安装
+# Installation
 
-下载 https://drive.google.com/open?id=154JgKpzCPW82qINcVieuPH3fZ2e0P812 的权重文件 79999_iter.pth
+Download the weight file 79999_iter.pth from https://drive.google.com/open?id=154JgKpzCPW82qINcVieuPH3fZ2e0P812.
+
 ```python
 # pip install -e git+https://github.com/sword4869/face_parsing.git#egg=face_parsing
 pip install face_parsing
 ```
-
-# 输入和输出
+# Input and Output
 ```
 ├── pretrain
 │   └── 79999_iter.pth      # ckpt
-├── test_img                # 输入
+├── test_img                # input
 │   ├── 00000.jpg
 │   └── 116_ori.png
-└── test_res                # 输出
-    ├── merge_00000.png             # 融合mask
+└── test_res                # output
+    ├── merge_00000.png             # merge masks
     ├── merge_116_ori.png
-    ├── weighted_00000.png          # 叠加原图
+    ├── weighted_00000.png          # weighted original
     ├── weighted_116_ori.png
-    ├── parsing_00000.png           # 分类结果，每个像素的值是[0, 18]
+    ├── parsing_00000.png           # classification result, each pixel value is [0, 18]
     ├── parsing_116_ori.png
-    └── masks                       # 各部分mask
+    └── masks                       # masks for each part
         ├── 00000
         │   ├── background.png
         │   ├── eye_g.png
@@ -39,21 +39,19 @@ pip install face_parsing
             ├── hair.png
 ```
 ```python
-# 在face_parsing下
+# Inside the `face_parsing` directory
 $ face_parsing
 
-# 在face_parsing路径外
-$ face_parsing --ckpt ~/79999_iter.pth --res_path ~/test_res --img_path ~/test_img
+# Outside the `face_parsing` directory
+$ face_parsing --ckpt 79999_iter.pth --res_path test_res --img_path test_img
 ```
-生成脚本为 `segment.py`。默认情况下，它将把分割图像输出到 `test_res` 文件夹中。
+The generating script is `segment.py`. It will output the segmentaion images to the specific folder(`test_res` by default).
 
-`masks`: 仅展示识别部分。
+`masks`: only show recognized part.
 
+color1 from [face-parsing.PyTorch](https://github.com/zllrunning/face-parsing.PyTorch) code,
 
-
-color1 原来 [face-parsing.PyTorch](https://github.com/zllrunning/face-parsing.PyTorch) 代码的颜色, 
-
-color2 `CelebAMask-HQ`的颜色 `CelebAMask-HQ/face_parsing/Data_preprocessing/g_color.py`
+color2 from `CelebAMask-HQ` colors in `CelebAMask-HQ/face_parsing/Data_preprocessing/g_color.py`
 
 | Index |    Name    |    Color1     |    Color2     |
 | :---: | :--------: | :-----------: | :-----------: |
@@ -83,7 +81,7 @@ color2 `CelebAMask-HQ`的颜色 `CelebAMask-HQ/face_parsing/Data_preprocessing/g
 
 ![image-20240702214100671](https://cdn.jsdelivr.net/gh/sword4869/pic1@main/images/202407022141703.png)
 
-# 参考资料
+# Reference
 
 > folk from https://github.com/zllrunning/face-parsing.PyTorch, https://github.com/dw-dengwei/face-seg
 
